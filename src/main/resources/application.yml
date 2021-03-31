@@ -1,0 +1,40 @@
+data:
+  elasticsearch:
+    repositories:
+      enabled: true
+    cluster-nodes: 127.0.0.1:9300 # 9300 for TCP
+    cluster-name: elasticsearch
+    properties:
+      path:
+        logs: ./elasticsearch/log
+        data: ./elasticsearch/data
+
+spring:
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+redis:
+  host: localhost # Redis host address
+  database: 0 # Redis database index（ default value: 0）
+  port: 6379 # Redis server port
+  password: # Redis server password (default is null）
+  jedis:
+    pool:
+      max-active: 8 # maximum connection number in pool（use negative number means no limit）
+      max-wait: -1ms # waiting time when blocking（use negative number means no limit）
+      max-idle: 8
+      min-idle: 0
+  timeout: 3000ms
+  key:
+    prefix:
+      authCode: "portal:authCode:"
+    expire:
+      authCode: 120
